@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: SB_BooksEcommerce
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/books
+    username: postgre
+    password: postgre
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: a4cb94a195540642a91be2e697da239a
+      database: 0
+      ssl:
+        enabled: false
+      timeout: 2000ms
+      jedis:
+        pool:
+          max-active: 5
+          max-idle: 2
+          min-idle: 1
+          max-wait: 100ms
+      repositories:
+        enabled: true
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
