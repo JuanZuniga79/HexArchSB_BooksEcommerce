@@ -1,20 +1,13 @@
 package com.rustedcor.sb_booksecommerce.infrastructure.components
 
+import com.rustedcor.sb_booksecommerce.infrastructure.models.BearerToken
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.springframework.security.authentication.AbstractAuthenticationToken
-import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
-
-class BearerToken(val value: String) : AbstractAuthenticationToken(AuthorityUtils.NO_AUTHORITIES){
-    override fun getCredentials(): Any = value;
-
-    override fun getPrincipal(): Any = value;
-}
 
 @Component
 class JwtSupport {
@@ -41,7 +34,6 @@ class JwtSupport {
         val expired = claims.expiration.before(Date.from(Instant.now()))
         if(user == null) throw IllegalArgumentException("User cannot be null!")
         val res = !expired && (claims.subject == user.username)
-        println("Res: $res")
         return res
     }
 

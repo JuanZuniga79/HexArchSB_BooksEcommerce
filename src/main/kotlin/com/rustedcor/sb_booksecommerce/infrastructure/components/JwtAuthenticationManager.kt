@@ -1,5 +1,6 @@
 package com.rustedcor.sb_booksecommerce.infrastructure.components
 
+import com.rustedcor.sb_booksecommerce.infrastructure.models.BearerToken
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
 import org.springframework.security.authentication.ReactiveAuthenticationManager

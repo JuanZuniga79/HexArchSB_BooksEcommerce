@@ -1,5 +1,6 @@
 package com.rustedcor.sb_booksecommerce.infrastructure.components
 
+import com.rustedcor.sb_booksecommerce.infrastructure.models.BearerToken
 import org.springframework.http.HttpHeaders
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter

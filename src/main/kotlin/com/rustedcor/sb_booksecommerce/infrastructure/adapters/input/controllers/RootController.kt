@@ -1,10 +1,8 @@
-package com.rustedcor.sb_booksecommerce.infrastructure.adapters.controllers
+package com.rustedcor.sb_booksecommerce.infrastructure.adapters.input.controllers
 
 import com.rustedcor.sb_booksecommerce.infrastructure.components.JwtSupport
 import kotlinx.coroutines.reactor.awaitSingleOrNull
-import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.GetMapping
