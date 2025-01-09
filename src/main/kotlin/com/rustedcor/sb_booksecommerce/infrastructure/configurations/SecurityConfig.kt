@@ -29,7 +29,7 @@ class SecurityConfig {
         val user = User.builder()
             .username("Kenji")
             .password(encoder.encode("password"))
-            .roles("USER")
+            .roles("ADMIN")
             .build()
 
         return MapReactiveUserDetailsService(user);
@@ -46,13 +46,13 @@ class SecurityConfig {
         filter.setServerAuthenticationConverter(converter)
 
         http
-            .exceptionHandling {
-                exception ->
-                    exception.authenticationEntryPoint { exchange , _ -> Mono.fromRunnable{
-                            exchange.response.statusCode = HttpStatus.UNAUTHORIZED
-                            exchange.response.headers.set(HttpHeaders.WWW_AUTHENTICATE, "Bearer")
-                        }
+            .exceptionHandling { spec ->
+                spec.authenticationEntryPoint { exchange, _ ->
+                    Mono.fromRunnable {
+                        exchange.response.statusCode = HttpStatus.UNAUTHORIZED
+                        exchange.response.headers.set(HttpHeaders.WWW_AUTHENTICATE, "Bearer")
                     }
+                }
             }
             .cors {
                 cors -> cors.disable()

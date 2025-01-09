@@ -3,7 +3,6 @@ package com.rustedcor.sb_booksecommerce.infrastructure.components
 import com.rustedcor.sb_booksecommerce.infrastructure.models.BearerToken
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -29,12 +28,10 @@ class JwtSupport {
         return parser.parseSignedClaims(token.value).payload.subject
     }
 
-    fun isValid(token: BearerToken, user: UserDetails?): Boolean {
+    fun isValid(token: BearerToken): Boolean {
         val claims = parser.parseSignedClaims(token.value).payload
         val expired = claims.expiration.before(Date.from(Instant.now()))
-        if(user == null) throw IllegalArgumentException("User cannot be null!")
-        val res = !expired && (claims.subject == user.username)
-        return res
+        return !expired
     }
 
 }

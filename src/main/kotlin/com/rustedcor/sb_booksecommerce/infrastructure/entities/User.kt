@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 @Entity
-@Table(name = "USERS", uniqueConstraints = [UniqueConstraint(columnNames = ["userName", "email"])])
+@Table(name = "USERS", uniqueConstraints = [UniqueConstraint(columnNames = ["email"])])
 data class User(
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
@@ -14,7 +14,7 @@ data class User(
     var username: String,
     var email: String,
     var password: String,
-    var phoneNumber: String,
+    var phoneNumber: String? = null,
     var birthDate: LocalDate,
     var active: Boolean,
     @ManyToOne(fetch = FetchType.LAZY)
