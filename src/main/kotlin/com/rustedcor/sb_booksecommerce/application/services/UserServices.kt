@@ -27,6 +27,12 @@ class UserServices(
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
+    suspend fun validateUsernameOrEmail(data: String): User?{
+        return withContext(Dispatchers.IO){
+            repository.getUserByUsername(data) ?: repository.getUserByEmail(data)
+        }
+    }
+
     suspend fun getUserByUsername(username: String): User? {
         return withContext(Dispatchers.IO){
             repository.getUserByUsername(username)
@@ -46,12 +52,10 @@ class UserServices(
         return user.toUser(date, role, password)
     }
 
-    suspend fun login(user: LoginDTO): ResponseLoginDTO?{
-        val dbUser = withContext(Dispatchers.IO){
-            repository.getUserByUsername(user.username) ?: repository.getUserByEmail(user.username)
-        }
-        dbUser ?: return null;
-        if(!validator.validatePassword(user.password, dbUser.password)) return null;
+    suspend fun login(user: LoginDTO): ResponseLoginDTO{
+        val dbUser = validateUsernameOrEmail(user.username);
+        dbUser ?: throw RuntimeException("Username or email invalid");
+        if(!validator.validatePassword(user.password, dbUser.password)) throw RuntimeException("Password invalid");
         val token = authServices.getToken(dbUser.username);
         return ResponseLoginDTO(
             user=dbUser.toBasicUserDTO(),
